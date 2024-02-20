@@ -1,0 +1,22 @@
+#pragma kernel CSMain
+
+RWStructuredBuffer<float3> Verts;
+
+StructuredBuffer<float3> SrcVerts;
+StructuredBuffer<float3> DstVerts;
+
+RWStructuredBuffer<float2> UVs;
+
+StructuredBuffer<float2> SrcUVs;
+StructuredBuffer<float2> DstUVs;
+
+float Blend;
+
+[numthreads(1, 1, 1)]
+
+  void
+  CSMain(uint3 id
+         : SV_DispatchThreadID) {
+    Verts[id.x] = lerp(SrcVerts[id.x], DstVerts[id.x], Blend);
+    UVs[id.x] = lerp(SrcUVs[id.x], DstUVs[id.x], Blend);
+  }
